@@ -33,3 +33,28 @@ while True:
         print( next_day.strftime("%d %B %Y"))
         download(string_url,dest_folder="BhavDownloads",name= str(next_day.strftime("%d%m%Y")).upper()+".csv.zip")
     next_day += datetime.timedelta(days=1)
+wDir1 = os.getcwd()
+wd=wDir1+'\BhavDownloads'
+os.chdir(wd)
+for file in os.listdir(wd):   # get the list of files
+    print(os.getcwd()+file)
+    if zipfile.is_zipfile(file): # if it is a zipfile, extract it
+        print("Found")
+        with zipfile.ZipFile(file) as item: # treat the file as a zip
+               item.extractall()  # extract it in the working directory
+
+#deletes Zips               
+for item in os.listdir(wd):
+    if item.endswith(".zip"):
+        os.remove( os.path.join( wd, item ) )   
+#name formatting        
+for fileName in os.listdir("."):
+    os.rename(fileName, fileName.replace("fo", ""))
+for fileName in os.listdir("."):
+    os.rename(fileName, fileName.replace("bhav", ""))               
+#Changes Name
+for fileName in os.listdir("."):
+    oldNametime= datetime.datetime.strptime(fileName.replace(".csv",""), '%d%b%Y')
+    newN=oldNametime.strftime('%Y-%m-%d')+'.csv'
+    os.rename(fileName,newN)    
+os.chdir(wDir1)    
